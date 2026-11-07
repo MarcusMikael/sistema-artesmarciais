@@ -2,11 +2,19 @@ package ace.model;
 
 import ace.model.enums.StatusPagamento;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "pagamento")
+@Table(
+    name = "pagamento",
+    uniqueConstraints = @UniqueConstraint(
+        name = "uk_pagamento_aluno_mes_ano",
+        columnNames = {"id_aluno", "mes_referencia", "ano_referencia"}
+    )
+)
 public class PagamentoModel {
 
     @Id
@@ -15,6 +23,7 @@ public class PagamentoModel {
 
     // Relacionamento com Aluno
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "id_aluno", nullable = false)
     private AlunoModel aluno;
 
@@ -33,6 +42,11 @@ public class PagamentoModel {
 
     @Column(name = "data_hora_confirmacao")
     private LocalDateTime dataHoraConfirmacao;
+
+    // Valor cobrado nesta mensalidade, gravado na geração. Fica nulo apenas em
+    // registros antigos, criados antes desta coluna existir.
+    @Column(name = "valor", precision = 10, scale = 2)
+    private BigDecimal valor;
 
     public PagamentoModel() {
     }
@@ -91,5 +105,13 @@ public class PagamentoModel {
 
     public void setDataHoraConfirmacao(LocalDateTime dataHoraConfirmacao) {
         this.dataHoraConfirmacao = dataHoraConfirmacao;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
     }
 }

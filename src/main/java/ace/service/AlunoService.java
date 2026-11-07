@@ -3,6 +3,7 @@ package ace.service;
 
 import ace.model.AlunoModel;
 import ace.model.enums.StatusAluno;
+import ace.model.enums.StatusPagamento;
 import ace.repository.AlunoRepository;
 import ace.repository.PagamentoRepository;
 
@@ -61,6 +62,12 @@ public class AlunoService {
             aluno.setStatus(dados.getStatus());
         }
 
+        // Reajuste/correção do valor vale para as mensalidades ainda pendentes.
+        // Pagamentos com comprovante ou confirmados mantêm o valor original.
+        pagamentoRepository
+            .findByAluno_IdAndStatusPagamento(id, StatusPagamento.PENDENTE)
+            .forEach(p -> p.setValor(aluno.getValorMensalidade()));
+
         return alunoRepository.save(aluno);
     }
 
@@ -68,13 +75,17 @@ public class AlunoService {
     public void excluir(Long id) {
         AlunoModel aluno = buscarPorId(id);
 
-        if (pagamentoRepository.existsByAluno_Id(id)) {
+        // Mensalidades apenas geradas (PENDENTE, sem comprovante) não contam
+        // como histórico financeiro e são removidas junto com o aluno.
+        if (pagamentoRepository.existsByAluno_IdAndStatusPagamentoNot(
+                id, StatusPagamento.PENDENTE)) {
             throw new IllegalStateException(
                 "Este aluno possui histórico financeiro. " +
-                "Altere seu status para INATIVO em vez de excluí-lo."
+                "Altere seu status para Inativo em vez de excluí-lo."
             );
         }
 
+        pagamentoRepository.deleteByAluno_Id(id);
         alunoRepository.delete(aluno);
     }
 

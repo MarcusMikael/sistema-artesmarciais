@@ -54,13 +54,7 @@ public class PagamentoService {
     @Transactional
     public PagamentoModel criarPagamento(Long idAluno, Integer mes, Integer ano) {
 
-        if (mes == null || mes < 1 || mes > 12) {
-            throw new IllegalArgumentException("Mês inválido.");
-        }
-
-        if (ano == null || ano < 2000) {
-            throw new IllegalArgumentException("Ano inválido.");
-        }
+        validarReferencia(mes, ano);
 
         AlunoModel aluno = alunoRepository.findById(idAluno)
                 .orElseThrow(() ->
@@ -90,8 +84,44 @@ public class PagamentoService {
         pagamento.setAnoReferencia(ano);
         pagamento.setStatusPagamento(StatusPagamento.PENDENTE);
         pagamento.setComprovanteRecebido(false);
+        pagamento.setValor(aluno.getValorMensalidade());
 
         return pagamentoRepository.save(pagamento);
+    }
+
+    @Transactional
+    public List<PagamentoModel> gerarMensalidades(Integer mes, Integer ano) {
+        validarReferencia(mes, ano);
+
+        for (AlunoModel aluno : alunoRepository.findByStatus(StatusAluno.ATIVO)) {
+            boolean jaExiste = pagamentoRepository
+                    .existsByAluno_IdAndMesReferenciaAndAnoReferencia(
+                        aluno.getId(), mes, ano
+                    );
+
+            if (!jaExiste) {
+                PagamentoModel pagamento = new PagamentoModel();
+                pagamento.setAluno(aluno);
+                pagamento.setMesReferencia(mes);
+                pagamento.setAnoReferencia(ano);
+                pagamento.setStatusPagamento(StatusPagamento.PENDENTE);
+                pagamento.setComprovanteRecebido(false);
+                pagamento.setValor(aluno.getValorMensalidade());
+                pagamentoRepository.save(pagamento);
+            }
+        }
+
+        return pagamentoRepository.findByMesReferenciaAndAnoReferencia(mes, ano);
+    }
+
+    private void validarReferencia(Integer mes, Integer ano) {
+        if (mes == null || mes < 1 || mes > 12) {
+            throw new IllegalArgumentException("Mês inválido.");
+        }
+
+        if (ano == null || ano < 2000) {
+            throw new IllegalArgumentException("Ano inválido.");
+        }
     }
 
     @Transactional
@@ -102,6 +132,11 @@ public class PagamentoService {
             throw new IllegalStateException(
                 "Este pagamento já foi confirmado."
             );
+        }
+
+        // Registros antigos sem valor gravado: congela o valor no recebimento.
+        if (pagamento.getValor() == null) {
+            pagamento.setValor(pagamento.getAluno().getValorMensalidade());
         }
 
         pagamento.setComprovanteRecebido(true);

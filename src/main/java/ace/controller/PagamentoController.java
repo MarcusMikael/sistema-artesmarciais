@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/pagamentos")
-@CrossOrigin(origins = "*")
 public class PagamentoController {
 
     private final PagamentoService pagamentoService;
@@ -60,6 +59,18 @@ public class PagamentoController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(pagamento);
+    }
+
+    /**
+     * Gera as mensalidades PENDENTES do mês para todos os alunos ativos que
+     * ainda não possuem pagamento e devolve a lista completa do mês.
+     */
+    @PostMapping("/gerar")
+    public List<PagamentoModel> gerarMensalidades(
+            @RequestParam Integer mes,
+            @RequestParam Integer ano) {
+
+        return pagamentoService.gerarMensalidades(mes, ano);
     }
 
     @PatchMapping("/{id}/comprovante")
