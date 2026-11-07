@@ -5,6 +5,7 @@ import ace.model.AlunoModel;
 import ace.model.enums.StatusAluno;
 import ace.service.AlunoService;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/alunos")
-@CrossOrigin(origins = "*")
 public class AlunoController {
 
     private final AlunoService alunoService;
@@ -33,7 +33,7 @@ public class AlunoController {
     }
 
     @PostMapping
-    public ResponseEntity<AlunoModel> cadastrar(@RequestBody AlunoModel aluno) {
+    public ResponseEntity<AlunoModel> cadastrar(@Valid @RequestBody AlunoModel aluno) {
         AlunoModel novoAluno = alunoService.cadastrar(aluno);
 
         return ResponseEntity
@@ -44,7 +44,7 @@ public class AlunoController {
     @PutMapping("/{id}")
     public AlunoModel atualizar(
             @PathVariable Long id,
-            @RequestBody AlunoModel aluno) {
+            @Valid @RequestBody AlunoModel aluno) {
 
         return alunoService.atualizar(id, aluno);
     }

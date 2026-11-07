@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Entrar · Alessandro Silva</title>
+  <meta name="theme-color" content="#121212">
+  <link rel="icon" href="/img/logo.webp" type="image/webp">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <div id="app">
+    <main class="login-page">
+      <div class="login-accent"></div>
+      <section class="login-content">
+        <img class="login-logo" src="/img/logo.webp" alt="Escola de Artes Marciais Alessandro Silva">
+
+        <div class="login-heading">
+          <span class="eyebrow">ÁREA RESTRITA</span>
+          <h1>Bem-vindo de volta</h1>
+          <p>Entre para gerenciar sua escola.</p>
+        </div>
+
+        <form class="login-form" id="login-form" novalidate>
+          <label class="field" id="field-email">
+            <span class="field-label">E-mail</span>
+            <span class="input-wrap">
+              <span data-icon="mail"></span>
+              <input type="email" name="email" inputmode="email" autocomplete="username" placeholder="seu@email.com">
+            </span>
+            <span class="error-text" hidden></span>
+          </label>
+
+          <label class="field" id="field-senha">
+            <span class="field-label">Senha</span>
+            <span class="input-wrap">
+              <span data-icon="lock"></span>
+              <input type="password" name="senha" autocomplete="current-password" placeholder="Digite sua senha">
+              <button class="icon-button" type="button" id="toggle-senha" aria-label="Mostrar senha"></button>
+            </span>
+            <span class="error-text" hidden></span>
+          </label>
+
+          <div class="auth-error" id="auth-error" hidden></div>
+
+          <button class="button primary login-button" type="submit" id="login-button">
+            Entrar no painel <span data-icon="arrow"></span>
+          </button>
+        </form>
+      </section>
+      <p class="login-footer">Escola de Artes Marciais Alessandro Silva · Gestão da academia</p>
+    </main>
+  </div>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/login.js"></script>
+</body>
+</html>
