@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-/** Converte as exceções de regra de negócio em respostas JSON com mensagem amigável. */
+// Converte as exceções de regra de negócio em respostas JSON com mensagem amigável.
 @RestControllerAdvice
 public class ApiExceptionHandler {
 

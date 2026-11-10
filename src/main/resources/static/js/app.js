@@ -153,8 +153,8 @@
   function bottomNav(screen) {
     const active = screen === 'student-form' ? 'students' : screen;
     const items = [['dashboard', 'dashboard', 'Dashboard', '/dashboard'],
-      ['students', 'students', 'Alunos', '/alunos'],
-      ['finance', 'finance', 'Financeiro', '/financeiro']];
+    ['students', 'students', 'Alunos', '/alunos'],
+    ['finance', 'finance', 'Financeiro', '/financeiro']];
     return `<nav class="bottom-nav" aria-label="Navegação principal">
       ${items.map(([key, ic, label, path]) => `
         <button class="${active === key ? 'active' : ''}" data-go="${path}">
@@ -416,7 +416,7 @@
       ? pays.reduce((s, p) => s + valorPagamento(p), 0)
       : ativos().reduce((s, a) => s + Number(a.valorMensalidade || 0), 0);
     const filters = [['all', 'Todos', pays.length], ['pending', 'Pendentes', count('pending')],
-      ['waiting', 'Aguardando', count('waiting')], ['paid', 'Pagos', count('paid')]];
+    ['waiting', 'Aguardando', count('waiting')], ['paid', 'Pagos', count('paid')]];
 
     return `<main class="page">
       ${pageIntro('PAINEL ADMINISTRATIVO', 'Financeiro', 'Acompanhe e confira as mensalidades do mês.')}

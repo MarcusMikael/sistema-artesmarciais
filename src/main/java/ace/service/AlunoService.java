@@ -34,8 +34,7 @@ public class AlunoService {
     @Transactional(readOnly = true)
     public AlunoModel buscarPorId(Long id) {
         return alunoRepository.findById(id)
-                .orElseThrow(() ->
-                    new NoSuchElementException("Aluno não encontrado."));
+                .orElseThrow(() -> new NoSuchElementException("Aluno não encontrado."));
     }
 
     @Transactional
@@ -65,8 +64,8 @@ public class AlunoService {
         // Reajuste/correção do valor vale para as mensalidades ainda pendentes.
         // Pagamentos com comprovante ou confirmados mantêm o valor original.
         pagamentoRepository
-            .findByAluno_IdAndStatusPagamento(id, StatusPagamento.PENDENTE)
-            .forEach(p -> p.setValor(aluno.getValorMensalidade()));
+                .findByAluno_IdAndStatusPagamento(id, StatusPagamento.PENDENTE)
+                .forEach(p -> p.setValor(aluno.getValorMensalidade()));
 
         return alunoRepository.save(aluno);
     }
@@ -80,9 +79,8 @@ public class AlunoService {
         if (pagamentoRepository.existsByAluno_IdAndStatusPagamentoNot(
                 id, StatusPagamento.PENDENTE)) {
             throw new IllegalStateException(
-                "Este aluno possui histórico financeiro. " +
-                "Altere seu status para Inativo em vez de excluí-lo."
-            );
+                    "Este aluno possui histórico financeiro. " +
+                            "Altere seu status para Inativo em vez de excluí-lo.");
         }
 
         pagamentoRepository.deleteByAluno_Id(id);

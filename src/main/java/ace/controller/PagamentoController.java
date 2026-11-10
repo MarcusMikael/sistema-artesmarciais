@@ -1,7 +1,6 @@
-
 package ace.controller;
 
-import ace.model.PagamentoModel;
+import ace.dto.PagamentoResponse;
 import ace.model.enums.StatusPagamento;
 import ace.service.PagamentoService;
 
@@ -22,69 +21,73 @@ public class PagamentoController {
     }
 
     @GetMapping
-    public List<PagamentoModel> listarTodos() {
-        return pagamentoService.listarTodos();
+    public ResponseEntity<List<PagamentoResponse>> listarTodos() {
+        return ResponseEntity.ok(PagamentoResponse.de(pagamentoService.listarTodos()));
     }
 
     @GetMapping("/{id}")
-    public PagamentoModel buscarPorId(@PathVariable Long id) {
-        return pagamentoService.buscarPorId(id);
+    public ResponseEntity<PagamentoResponse> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(PagamentoResponse.de(pagamentoService.buscarPorId(id)));
     }
 
     @GetMapping("/mes")
-    public List<PagamentoModel> listarPorMesAno(
+    public ResponseEntity<List<PagamentoResponse>> listarPorMesAno(
             @RequestParam Integer mes,
             @RequestParam Integer ano) {
 
-        return pagamentoService.listarPorMesAno(mes, ano);
+        return ResponseEntity.ok(
+                PagamentoResponse.de(pagamentoService.listarPorMesAno(mes, ano)));
     }
 
     @GetMapping("/status/{status}")
-    public List<PagamentoModel> listarPorStatus(
+    public ResponseEntity<List<PagamentoResponse>> listarPorStatus(
             @PathVariable StatusPagamento status) {
 
-        return pagamentoService.listarPorStatus(status);
+        return ResponseEntity.ok(
+                PagamentoResponse.de(pagamentoService.listarPorStatus(status)));
     }
 
     @PostMapping
-    public ResponseEntity<PagamentoModel> criarPagamento(
+    public ResponseEntity<PagamentoResponse> criarPagamento(
             @RequestParam Long idAluno,
             @RequestParam Integer mes,
             @RequestParam Integer ano) {
 
-        PagamentoModel pagamento = pagamentoService.criarPagamento(
-                idAluno, mes, ano
-        );
+        var pagamento = pagamentoService.criarPagamento(idAluno, mes, ano);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(pagamento);
+                .body(PagamentoResponse.de(pagamento));
     }
 
-    /**
-     * Gera as mensalidades PENDENTES do mês para todos os alunos ativos que
-     * ainda não possuem pagamento e devolve a lista completa do mês.
+    /*
+      Gera as mensalidades PENDENTES do mês para todos os alunos ativos que
+      ainda não possuem pagamento e devolve a lista completa do mês.
      */
     @PostMapping("/gerar")
-    public List<PagamentoModel> gerarMensalidades(
+    public ResponseEntity<List<PagamentoResponse>> gerarMensalidades(
             @RequestParam Integer mes,
             @RequestParam Integer ano) {
 
-        return pagamentoService.gerarMensalidades(mes, ano);
+        return ResponseEntity.ok(
+                PagamentoResponse.de(pagamentoService.gerarMensalidades(mes, ano)));
     }
 
     @PatchMapping("/{id}/comprovante")
-    public PagamentoModel registrarComprovante(@PathVariable Long id) {
-        return pagamentoService.registrarComprovante(id);
+    public ResponseEntity<PagamentoResponse> registrarComprovante(@PathVariable Long id) {
+        return ResponseEntity.ok(
+                PagamentoResponse.de(pagamentoService.registrarComprovante(id)));
     }
 
     @PatchMapping("/{id}/confirmar")
-    public PagamentoModel confirmarPagamento(@PathVariable Long id) {
-        return pagamentoService.confirmarPagamento(id);
+    public ResponseEntity<PagamentoResponse> confirmarPagamento(@PathVariable Long id) {
+        return ResponseEntity.ok(
+                PagamentoResponse.de(pagamentoService.confirmarPagamento(id)));
     }
 
     @PatchMapping("/{id}/desfazer-confirmacao")
-    public PagamentoModel desfazerConfirmacao(@PathVariable Long id) {
-        return pagamentoService.desfazerConfirmacao(id);
+    public ResponseEntity<PagamentoResponse> desfazerConfirmacao(@PathVariable Long id) {
+        return ResponseEntity.ok(
+                PagamentoResponse.de(pagamentoService.desfazerConfirmacao(id)));
     }
 }

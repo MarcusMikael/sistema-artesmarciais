@@ -20,7 +20,7 @@ public class AuthController {
         this.nomeAdmin = nomeAdmin;
     }
 
-    /** Dados do usuário logado. */
+    // Dados do usuário logado.
     @GetMapping("/me")
     public Map<String, String> usuarioLogado(Authentication authentication) {
         return Map.of(
