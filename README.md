@@ -25,6 +25,12 @@ Funciona no celular e no computador.
 |---|---|
 | ![Início com indicadores do mês](docs/imagens/inicio.jpg) | ![Financeiro com as mensalidades do mês](docs/imagens/financeiro.jpg) |
 
+No celular:
+
+| Início | Alunos | Financeiro | Ficha do aluno |
+|---|---|---|---|
+| ![Início no celular](docs/imagens/celular-inicio.jpg) | ![Lista de alunos no celular](docs/imagens/celular-alunos.jpg) | ![Financeiro no celular](docs/imagens/celular-financeiro.jpg) | ![Ficha do aluno no celular](docs/imagens/celular-ficha.jpg) |
+
 ## Como executar
 
 Requisito: **Java 21**. O Maven vem junto no projeto.
