@@ -190,6 +190,7 @@ body.is-busy { cursor: progress; }
 .metric-top .icon { color: var(--subtle); }
 .metric strong { margin-top: 12px; font: 700 26px/1.1 var(--font-display); letter-spacing: .3px; overflow-wrap: anywhere; }
 .metric small { margin-top: 6px; color: var(--muted); font-size: 12px; line-height: 1.4; }
+.metric small b { font-weight: 600; }
 .tone-green .metric-top .icon { color: var(--green); }
 .tone-yellow .metric-top .icon { color: var(--yellow); }
 .tone-red .metric-top .icon { color: var(--alert); }
@@ -322,13 +323,15 @@ body.is-busy { cursor: progress; }
 .desktop-only { display: none; }
 .list-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
 .list-card li + li { border-top: 1px solid var(--border); }
-.list-row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; min-height: 66px; }
+.list-item { display: flex; align-items: center; }
+.list-row { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; padding: 12px 4px 12px 14px; min-height: 66px; }
+.list-edit { flex: none; width: 44px; height: 44px; margin-right: 6px; }
 .list-row:hover { background: var(--card-hover); }
 .list-row > .icon { color: var(--subtle); }
 .list-main { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .list-main strong { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.list-main small, .list-side small { color: var(--muted); font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.list-side { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; text-align: right; }
+.list-main small, .list-side small { color: var(--muted); font-size: 13px; line-height: 1.35; overflow-wrap: anywhere; }
+.list-side { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; text-align: right; }
 .list-side strong { font-size: 14px; white-space: nowrap; }
 .result-count { margin-top: 10px; color: var(--subtle); font-size: 13px; }
 
@@ -606,6 +609,13 @@ body.is-busy { cursor: progress; }
   .data-table th:first-child, .data-table td:first-child { padding-left: 14px; }
   .data-table th { font-size: 11px; letter-spacing: .2px; }
   .data-table .col-opt { display: none; }
+}
+
+/* Celulares estreitos: status e mensalidade numa linha abaixo do texto do aluno. */
+@media (max-width: 419px) {
+  .list-row { display: grid; grid-template-columns: auto 1fr; column-gap: 12px; row-gap: 8px; }
+  .list-row > .initials { grid-row: span 2; align-self: start; }
+  .list-side { flex-direction: row; align-items: center; justify-content: flex-start; gap: 10px; }
 }
 
 @media (max-width: 380px) {

@@ -65,7 +65,9 @@ export function dashboardPage() {
       ${metric('Alunos ativos', nAtivos, `${state.alunos.length - nAtivos} ${state.alunos.length - nAtivos === 1 ? 'inativo' : 'inativos'}`, 'students')}
       ${metric('Receita confirmada', money(r.recebido), `${pct}% de ${money(r.previsto)} previstos`, 'check', 'tone-green')}
       ${metric('Aguardando conferência', r.nWaiting, `${money(r.aguardando)} em comprovantes`, 'clock', 'tone-yellow')}
-      ${metric('Em atraso', r.nLate, r.nLate ? `${money(r.atrasado)} vencidos` : 'Tudo em dia', 'warning', 'tone-red')}
+      ${metric('Pagamentos pendentes', r.nPending,
+        r.nPending ? `${money(r.aberto)} em aberto${r.nLate ? ` · <b class="text-late">${r.nLate} em atraso</b>` : ''}` : 'Nenhuma pendência',
+        'warning', r.nLate ? 'tone-red' : '')}
     </section>
 
     <div class="dash-grid">

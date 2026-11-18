@@ -52,18 +52,20 @@ function studentRows(list) {
     </table>
   </div>
   <ul class="list-card mobile-only">
-    ${list.map((a) => `<li>
+    ${list.map((a) => `<li class="list-item">
       <a class="list-row" href="#/alunos/${a.id}">
         ${avatar(a.nome, '', a.faixaAtual)}
         <span class="list-main">
           <strong>${esc(a.nome)}</strong>
-          <small>${esc(modalidade(a.modalidade))}${a.faixaAtual ? ` · ${esc(a.faixaAtual)}` : ''}</small>
+          <small>${esc(modalidade(a.modalidade))}${a.turmaHorario ? ` · ${esc(a.turmaHorario)}` : ''}</small>
+          <small>${esc(a.telefone || 'Sem telefone')}${a.faixaAtual ? ` · Faixa ${esc(a.faixaAtual)}` : ''}</small>
         </span>
         <span class="list-side">
-          ${a.status === 'ATIVO' ? `<strong>${money(a.valorMensalidade)}</strong><small>dia ${a.diaVencimento}</small>` : statusChip(a.status)}
+          ${statusChip(a.status)}
+          <strong>${money(a.valorMensalidade)}</strong>
         </span>
-        ${icon('chevron', 18)}
       </a>
+      <a class="icon-button list-edit" href="#/alunos/${a.id}/editar" aria-label="Editar ${esc(a.nome)}" title="Editar">${icon('edit', 18)}</a>
     </li>`).join('')}
   </ul>`;
 }
