@@ -419,6 +419,8 @@ Regras complementares adotadas para manter os dados consistentes:
 
 - aluno com comprovante registrado ou pagamento confirmado não pode ser excluído, só inativado (`AlunoService.excluir`);
 - meses anteriores à matrícula não são cobrados (`gerarMensalidades`);
+- no mês da matrícula, o vencimento nunca fica antes da data de matrícula, para o aluno novo não aparecer em
+  atraso no primeiro dia (`PagamentoService.vencimentoPara`);
 - mudanças de valor ou de dia de vencimento valem só para as mensalidades ainda pendentes (`AlunoService.atualizar`);
 - o valor fica gravado em cada mensalidade, então reajustes não alteram pagamentos já conferidos;
 - registrar uma graduação atualiza a faixa atual do aluno (vale a mais recente) (`GraduacaoService`).
@@ -434,7 +436,7 @@ escola ou com o professor.**
 |---|---|---|
 | Onde guardar os dados | O documento previa dados no navegador; adotamos PostgreSQL, o que também permite usar o painel em mais de um aparelho | `application.properties` |
 | Geração das mensalidades | Automática para o mês atual; manual (botão) para outros meses | `state.js` (`loadPagamentos`) |
-| Vencimento | Cada aluno tem um dia de 1 a 28 (padrão 10); pendente após o vencimento aparece como atrasado | `AlunoModel`, `PagamentoResponse` |
+| Vencimento | Cada aluno tem um dia de 1 a 28 (padrão 10); no mês da matrícula, vence no máximo na data de matrícula; pendente após o vencimento aparece como atrasado | `AlunoModel`, `PagamentoResponse` |
 | Exclusão de aluno | Bloqueada quando há histórico financeiro; o caminho é inativar | `AlunoService.excluir` |
 | Alunos inativos no financeiro | Aparecem só se a mensalidade já tiver comprovante ou estiver paga | `state.js` (`pagamentosDoMes`) |
 | Comprovante registrado por engano | Pode voltar para Pendente | `PagamentoService.desfazerComprovante` |
