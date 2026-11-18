@@ -5,6 +5,7 @@ import ace.model.enums.Modalidade;
 import ace.model.enums.StatusAluno;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 public record AlunoResponse(
@@ -15,7 +16,9 @@ public record AlunoResponse(
         String turmaHorario,
         String faixaAtual,
         BigDecimal valorMensalidade,
-        StatusAluno status
+        StatusAluno status,
+        Integer diaVencimento,
+        LocalDate dataMatricula
 ) {
 
     public static AlunoResponse de(AlunoModel a) {
@@ -27,11 +30,12 @@ public record AlunoResponse(
                 a.getTurmaHorario(),
                 a.getFaixaAtual(),
                 a.getValorMensalidade(),
-                a.getStatus());
+                a.getStatus(),
+                a.diaVencimentoEfetivo(),
+                a.getDataMatricula());
     }
 
     public static List<AlunoResponse> de(List<AlunoModel> alunos) {
         return alunos.stream().map(AlunoResponse::de).toList();
     }
 }
-

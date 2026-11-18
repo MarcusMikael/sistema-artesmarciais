@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -49,6 +50,15 @@ public class AlunoModel {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private StatusAluno status = StatusAluno.ATIVO;
+
+    /** Dia do mês em que a mensalidade vence (1 a 28). Nulo em cadastros antigos. */
+    @Column(name = "dia_vencimento")
+    private Integer diaVencimento;
+
+    @Column(name = "data_matricula")
+    private LocalDate dataMatricula;
+
+    public static final int DIA_VENCIMENTO_PADRAO = 10;
 
     public AlunoModel() {
     }
@@ -115,5 +125,26 @@ public class AlunoModel {
 
     public void setStatus(StatusAluno status) {
         this.status = status;
+    }
+
+    public Integer getDiaVencimento() {
+        return diaVencimento;
+    }
+
+    public void setDiaVencimento(Integer diaVencimento) {
+        this.diaVencimento = diaVencimento;
+    }
+
+    /** Dia de vencimento, usando o padrão para cadastros antigos sem o campo. */
+    public int diaVencimentoEfetivo() {
+        return diaVencimento != null ? diaVencimento : DIA_VENCIMENTO_PADRAO;
+    }
+
+    public LocalDate getDataMatricula() {
+        return dataMatricula;
+    }
+
+    public void setDataMatricula(LocalDate dataMatricula) {
+        this.dataMatricula = dataMatricula;
     }
 }

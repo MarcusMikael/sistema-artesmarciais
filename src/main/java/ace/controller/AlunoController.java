@@ -2,9 +2,11 @@ package ace.controller;
 
 import ace.dto.AlunoRequest;
 import ace.dto.AlunoResponse;
+import ace.dto.PagamentoResponse;
 import ace.model.AlunoModel;
 import ace.model.enums.StatusAluno;
 import ace.service.AlunoService;
+import ace.service.PagamentoService;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -18,9 +20,11 @@ import java.util.List;
 public class AlunoController {
 
     private final AlunoService alunoService;
+    private final PagamentoService pagamentoService;
 
-    public AlunoController(AlunoService alunoService) {
+    public AlunoController(AlunoService alunoService, PagamentoService pagamentoService) {
         this.alunoService = alunoService;
+        this.pagamentoService = pagamentoService;
     }
 
     @GetMapping
@@ -31,6 +35,13 @@ public class AlunoController {
     @GetMapping("/{id}")
     public ResponseEntity<AlunoResponse> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(AlunoResponse.de(alunoService.buscarPorId(id)));
+    }
+
+    // Histórico de mensalidades do aluno, da mais recente para a mais antiga.
+    @GetMapping("/{id}/pagamentos")
+    public ResponseEntity<List<PagamentoResponse>> historico(@PathVariable Long id) {
+        return ResponseEntity.ok(PagamentoResponse.de(
+                pagamentoService.historicoDoAluno(id), pagamentoService.hoje()));
     }
 
     @PostMapping

@@ -1,15 +1,17 @@
-
 package ace.service;
 
 import ace.model.AlunoModel;
 import ace.model.enums.StatusAluno;
 import ace.model.enums.StatusPagamento;
 import ace.repository.AlunoRepository;
+import ace.repository.GraduacaoRepository;
 import ace.repository.PagamentoRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Clock;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -18,12 +20,18 @@ public class AlunoService {
 
     private final AlunoRepository alunoRepository;
     private final PagamentoRepository pagamentoRepository;
+    private final GraduacaoRepository graduacaoRepository;
+    private final Clock clock;
 
     public AlunoService(
             AlunoRepository alunoRepository,
-            PagamentoRepository pagamentoRepository) {
+            PagamentoRepository pagamentoRepository,
+            GraduacaoRepository graduacaoRepository,
+            Clock clock) {
         this.alunoRepository = alunoRepository;
         this.pagamentoRepository = pagamentoRepository;
+        this.graduacaoRepository = graduacaoRepository;
+        this.clock = clock;
     }
 
     @Transactional(readOnly = true)
@@ -41,6 +49,12 @@ public class AlunoService {
     public AlunoModel cadastrar(AlunoModel aluno) {
         if (aluno.getStatus() == null) {
             aluno.setStatus(StatusAluno.ATIVO);
+        }
+        if (aluno.getDiaVencimento() == null) {
+            aluno.setDiaVencimento(AlunoModel.DIA_VENCIMENTO_PADRAO);
+        }
+        if (aluno.getDataMatricula() == null) {
+            aluno.setDataMatricula(LocalDate.now(clock));
         }
 
         return alunoRepository.save(aluno);
@@ -60,12 +74,23 @@ public class AlunoService {
         if (dados.getStatus() != null) {
             aluno.setStatus(dados.getStatus());
         }
+        if (dados.getDiaVencimento() != null) {
+            aluno.setDiaVencimento(dados.getDiaVencimento());
+        }
+        if (dados.getDataMatricula() != null) {
+            aluno.setDataMatricula(dados.getDataMatricula());
+        }
 
-        // Reajuste/correção do valor vale para as mensalidades ainda pendentes.
-        // Pagamentos com comprovante ou confirmados mantêm o valor original.
+        // Reajuste/troca de vencimento vale para as mensalidades ainda pendentes.
+        // Pagamentos com comprovante ou confirmados mantêm os dados originais.
         pagamentoRepository
                 .findByAluno_IdAndStatusPagamento(id, StatusPagamento.PENDENTE)
-                .forEach(p -> p.setValor(aluno.getValorMensalidade()));
+                .forEach(p -> {
+                    p.setValor(aluno.getValorMensalidade());
+                    p.setDataVencimento(PagamentoService.calcularVencimento(
+                            p.getMesReferencia(), p.getAnoReferencia(),
+                            aluno.diaVencimentoEfetivo()));
+                });
 
         return alunoRepository.save(aluno);
     }
@@ -84,6 +109,7 @@ public class AlunoService {
         }
 
         pagamentoRepository.deleteByAluno_Id(id);
+        graduacaoRepository.deleteByAluno_Id(id);
         alunoRepository.delete(aluno);
     }
 

@@ -20,14 +20,18 @@ public class PagamentoController {
         this.pagamentoService = pagamentoService;
     }
 
+    private java.time.LocalDate hoje() {
+        return pagamentoService.hoje();
+    }
+
     @GetMapping
     public ResponseEntity<List<PagamentoResponse>> listarTodos() {
-        return ResponseEntity.ok(PagamentoResponse.de(pagamentoService.listarTodos()));
+        return ResponseEntity.ok(PagamentoResponse.de(pagamentoService.listarTodos(), hoje()));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PagamentoResponse> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(PagamentoResponse.de(pagamentoService.buscarPorId(id)));
+        return ResponseEntity.ok(PagamentoResponse.de(pagamentoService.buscarPorId(id), hoje()));
     }
 
     @GetMapping("/mes")
@@ -36,7 +40,7 @@ public class PagamentoController {
             @RequestParam Integer ano) {
 
         return ResponseEntity.ok(
-                PagamentoResponse.de(pagamentoService.listarPorMesAno(mes, ano)));
+                PagamentoResponse.de(pagamentoService.listarPorMesAno(mes, ano), hoje()));
     }
 
     @GetMapping("/status/{status}")
@@ -44,7 +48,7 @@ public class PagamentoController {
             @PathVariable StatusPagamento status) {
 
         return ResponseEntity.ok(
-                PagamentoResponse.de(pagamentoService.listarPorStatus(status)));
+                PagamentoResponse.de(pagamentoService.listarPorStatus(status), hoje()));
     }
 
     @PostMapping
@@ -57,7 +61,7 @@ public class PagamentoController {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(PagamentoResponse.de(pagamento));
+                .body(PagamentoResponse.de(pagamento, hoje()));
     }
 
     /*
@@ -70,24 +74,30 @@ public class PagamentoController {
             @RequestParam Integer ano) {
 
         return ResponseEntity.ok(
-                PagamentoResponse.de(pagamentoService.gerarMensalidades(mes, ano)));
+                PagamentoResponse.de(pagamentoService.gerarMensalidades(mes, ano), hoje()));
     }
 
     @PatchMapping("/{id}/comprovante")
     public ResponseEntity<PagamentoResponse> registrarComprovante(@PathVariable Long id) {
         return ResponseEntity.ok(
-                PagamentoResponse.de(pagamentoService.registrarComprovante(id)));
+                PagamentoResponse.de(pagamentoService.registrarComprovante(id), hoje()));
+    }
+
+    @PatchMapping("/{id}/desfazer-comprovante")
+    public ResponseEntity<PagamentoResponse> desfazerComprovante(@PathVariable Long id) {
+        return ResponseEntity.ok(
+                PagamentoResponse.de(pagamentoService.desfazerComprovante(id), hoje()));
     }
 
     @PatchMapping("/{id}/confirmar")
     public ResponseEntity<PagamentoResponse> confirmarPagamento(@PathVariable Long id) {
         return ResponseEntity.ok(
-                PagamentoResponse.de(pagamentoService.confirmarPagamento(id)));
+                PagamentoResponse.de(pagamentoService.confirmarPagamento(id), hoje()));
     }
 
     @PatchMapping("/{id}/desfazer-confirmacao")
     public ResponseEntity<PagamentoResponse> desfazerConfirmacao(@PathVariable Long id) {
         return ResponseEntity.ok(
-                PagamentoResponse.de(pagamentoService.desfazerConfirmacao(id)));
+                PagamentoResponse.de(pagamentoService.desfazerConfirmacao(id), hoje()));
     }
 }

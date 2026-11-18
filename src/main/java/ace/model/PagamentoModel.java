@@ -5,6 +5,7 @@ import ace.model.enums.StatusPagamento;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -47,6 +48,10 @@ public class PagamentoModel {
     // registros antigos, criados antes desta coluna existir.
     @Column(name = "valor", precision = 10, scale = 2)
     private BigDecimal valor;
+
+    // Data de vencimento, gravada na geração. Nula em registros antigos.
+    @Column(name = "data_vencimento")
+    private LocalDate dataVencimento;
 
     public PagamentoModel() {
     }
@@ -113,5 +118,13 @@ public class PagamentoModel {
 
     public void setValor(BigDecimal valor) {
         this.valor = valor;
+    }
+
+    public LocalDate getDataVencimento() {
+        return dataVencimento;
+    }
+
+    public void setDataVencimento(LocalDate dataVencimento) {
+        this.dataVencimento = dataVencimento;
     }
 }

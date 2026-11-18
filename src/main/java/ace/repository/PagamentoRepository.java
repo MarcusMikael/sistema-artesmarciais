@@ -5,6 +5,8 @@ import ace.model.enums.StatusPagamento;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,6 +16,22 @@ public interface PagamentoRepository extends JpaRepository<PagamentoModel, Long>
 
     // Buscar pagamentos de um aluno
     List<PagamentoModel> findByAluno_Id(Long idAluno);
+
+    // Histórico do aluno, do mês mais recente para o mais antigo
+    @EntityGraph(attributePaths = "aluno")
+    List<PagamentoModel> findByAluno_IdOrderByAnoReferenciaDescMesReferenciaDesc(Long idAluno);
+
+    // Todos os pagamentos (já carregando o aluno)
+    @Override
+    @EntityGraph(attributePaths = "aluno")
+    List<PagamentoModel> findAll();
+
+    // Pagamentos entre duas referências no formato ano * 100 + mês (ex.: 202611)
+    @Query("""
+        select p from PagamentoModel p join fetch p.aluno
+        where p.anoReferencia * 100 + p.mesReferencia between :inicio and :fim
+        """)
+    List<PagamentoModel> findEntreReferencias(@Param("inicio") int inicio, @Param("fim") int fim);
 
     // Buscar pagamentos por mês e ano (já carregando o aluno)
     @EntityGraph(attributePaths = "aluno")

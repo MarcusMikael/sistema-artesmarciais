@@ -64,13 +64,36 @@ class SegurancaApiTests {
 
     @Test
     @WithMockUser
+    void telefoneSemDddEhRecusado() throws Exception {
+        mvc.perform(post("/api/alunos").with(csrf())
+                .contentType("application/json")
+                .content("{\"nome\":\"Aluno Teste\",\"telefone\":\"9999-0000\",\"modalidade\":\"JIU_JITSU\",\"valorMensalidade\":150}"))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.fields.telefone").exists());
+    }
+
+    @Test
+    @WithMockUser
+    void relatorioEGraduacoesExigemDadosValidos() throws Exception {
+        mvc.perform(get("/api/relatorios/receita").param("meses", "3"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.length()").value(3));
+        mvc.perform(get("/api/relatorios/receita").param("meses", "abc"))
+            .andExpect(status().isBadRequest());
+        mvc.perform(get("/api/alunos/999999/graduacoes")).andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithMockUser
     void listaPagamentosDoMesSerializaAluno() throws Exception {
         java.time.LocalDate hoje = java.time.LocalDate.now();
         mvc.perform(get("/api/pagamentos/mes")
                 .param("mes", String.valueOf(hoje.getMonthValue()))
                 .param("ano", String.valueOf(hoje.getYear())))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$[0].aluno.nome").exists());
+            .andExpect(jsonPath("$[0].aluno.nome").exists())
+            .andExpect(jsonPath("$[0].dataVencimento").exists())
+            .andExpect(jsonPath("$[0].atrasado").isBoolean());
     }
 
     @Test

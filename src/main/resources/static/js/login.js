@@ -1,3 +1,5 @@
+import { api, esc, icon } from './common.js';
+
 (function () {
   document.querySelectorAll('[data-icon]').forEach((el) => {
     el.outerHTML = icon(el.dataset.icon, el.dataset.icon === 'arrow' ? 20 : 19);
