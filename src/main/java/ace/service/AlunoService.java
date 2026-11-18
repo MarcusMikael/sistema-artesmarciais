@@ -87,9 +87,8 @@ public class AlunoService {
                 .findByAluno_IdAndStatusPagamento(id, StatusPagamento.PENDENTE)
                 .forEach(p -> {
                     p.setValor(aluno.getValorMensalidade());
-                    p.setDataVencimento(PagamentoService.calcularVencimento(
-                            p.getMesReferencia(), p.getAnoReferencia(),
-                            aluno.diaVencimentoEfetivo()));
+                    p.setDataVencimento(PagamentoService.vencimentoPara(
+                            aluno, p.getMesReferencia(), p.getAnoReferencia()));
                 });
 
         return alunoRepository.save(aluno);

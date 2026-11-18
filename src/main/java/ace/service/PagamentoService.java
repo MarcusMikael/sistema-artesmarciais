@@ -47,13 +47,22 @@ public class PagamentoService {
         return ref.atDay(Math.min(dia, ref.lengthOfMonth()));
     }
 
+    /**
+     * Vencimento da mensalidade de um aluno. No mês da matrícula, nunca fica antes da
+     * própria matrícula: quem entra no dia 18 com vencimento no dia 15 não nasce em atraso.
+     */
+    public static LocalDate vencimentoPara(AlunoModel aluno, int mes, int ano) {
+        LocalDate vencimento = calcularVencimento(mes, ano, aluno.diaVencimentoEfetivo());
+        LocalDate matricula = aluno.getDataMatricula();
+        return matricula != null && vencimento.isBefore(matricula) ? matricula : vencimento;
+    }
+
     /** Vencimento gravado ou, em registros antigos, calculado pelo dia do aluno. */
     public static LocalDate vencimentoDe(PagamentoModel p) {
         if (p.getDataVencimento() != null) {
             return p.getDataVencimento();
         }
-        return calcularVencimento(p.getMesReferencia(), p.getAnoReferencia(),
-                p.getAluno().diaVencimentoEfetivo());
+        return vencimentoPara(p.getAluno(), p.getMesReferencia(), p.getAnoReferencia());
     }
 
     /** Valor gravado ou, em registros antigos, a mensalidade atual do aluno. */
@@ -166,8 +175,7 @@ public class PagamentoService {
         pagamento.setStatusPagamento(StatusPagamento.PENDENTE);
         pagamento.setComprovanteRecebido(false);
         pagamento.setValor(aluno.getValorMensalidade());
-        pagamento.setDataVencimento(
-                calcularVencimento(mes, ano, aluno.diaVencimentoEfetivo()));
+        pagamento.setDataVencimento(vencimentoPara(aluno, mes, ano));
         return pagamento;
     }
 

@@ -73,9 +73,11 @@ export async function loadAlunos() {
 export async function loadPagamentos() {
   const { mes, ano } = state.ref;
   // O mês atual tem as mensalidades geradas automaticamente.
-  state.pagamentos = isCurrentRef()
+  const pagamentos = isCurrentRef()
     ? await api(`/api/pagamentos/gerar?mes=${mes}&ano=${ano}`, { method: 'POST' })
     : await api(`/api/pagamentos/mes?mes=${mes}&ano=${ano}`);
+  // Se o usuário trocou de mês enquanto a resposta chegava, ela já não serve.
+  if (state.ref.mes === mes && state.ref.ano === ano) state.pagamentos = pagamentos;
 }
 
 export async function loadReceita() {

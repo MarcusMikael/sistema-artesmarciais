@@ -252,7 +252,7 @@ body.is-busy { cursor: progress; }
   display: flex; flex-direction: column; justify-content: flex-end; gap: 2px;
 }
 .chart-stack i { display: block; width: 100%; border-radius: 3px; }
-.chart-stack .bar-pending { background: #ff8a3d73; }
+.chart-stack .bar-pending { background: var(--alert); }
 .chart-label { display: flex; flex-direction: column; align-items: center; font-size: 12px; color: var(--muted); line-height: 1.2; }
 .chart-label small { font-size: 11px; color: var(--subtle); }
 
@@ -475,7 +475,6 @@ body.is-busy { cursor: progress; }
 .modal-content p + p { margin-top: 8px; }
 .modal-content strong { color: var(--text); }
 .modal-summary { display: flex; justify-content: space-between; align-items: center; margin: 14px 0; padding: 14px; background: var(--layer); border-radius: var(--radius-sm); }
-.modal-summary span { text-transform: capitalize; }
 .modal-summary strong { font-size: 17px; white-space: nowrap; }
 .check-row { display: grid; grid-template-columns: 22px 1fr; align-items: flex-start; gap: 10px; margin: 16px 0; cursor: pointer; }
 .check-row input { position: absolute; opacity: 0; }

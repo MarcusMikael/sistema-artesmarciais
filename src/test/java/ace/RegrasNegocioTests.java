@@ -267,4 +267,22 @@ class RegrasNegocioTests {
         assertThatThrownBy(() -> pagamentoService.receitaMensal(0))
             .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void alunoNovoNaoNasceEmAtrasoNoMesDaMatricula() {
+        AlunoModel aluno = novoAluno("Aluno Recem Chegado", StatusAluno.ATIVO);
+        AlunoModel dados = alunoService.buscarPorId(aluno.getId());
+        dados.setDataMatricula(LocalDate.of(ANO, 3, 18));
+        dados.setDiaVencimento(15);
+        alunoService.atualizar(aluno.getId(), dados);
+
+        // Mês da matrícula: vence na própria matrícula (18/03), não em 15/03.
+        PagamentoModel marco = pagamentoDe(pagamentoService.gerarMensalidades(3, ANO), aluno);
+        assertThat(marco.getDataVencimento()).isEqualTo(LocalDate.of(ANO, 3, 18));
+        assertThat(PagamentoResponse.de(marco, LocalDate.of(ANO, 3, 18)).atrasado()).isFalse();
+
+        // Meses seguintes: dia de vencimento normal.
+        PagamentoModel abril = pagamentoDe(pagamentoService.gerarMensalidades(4, ANO), aluno);
+        assertThat(abril.getDataVencimento()).isEqualTo(LocalDate.of(ANO, 4, 15));
+    }
 }
