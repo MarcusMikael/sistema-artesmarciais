@@ -2,8 +2,8 @@
 import { money } from '../common.js';
 
 export const MODALIDADES = {
-  JIU_JITSU: 'Jiu-jítsu',
-  LUTA_LIVRE: 'Luta Livre',
+  JIU_JITSU: 'Jiu-Jitsu',
+  LUTA_LIVRE: 'Luta livre',
   KICKBOXING: 'Kickboxing',
 };
 

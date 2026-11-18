@@ -3,7 +3,7 @@
 **Acesse o sistema:** https://sistema-artesmarciais.onrender.com (acesso restrito ao administrador da escola)
 
 Painel administrativo para organizar o cadastro de alunos e o acompanhamento manual das mensalidades de uma escola
-de artes marciais (Jiu-jítsu, Luta Livre e Kickboxing). Criado em 2026.2 na disciplina **ACE – Desenvolvimento e
+de artes marciais (Jiu-Jitsu, Luta livre e Kickboxing). Criado em 2026.2 na disciplina **ACE – Desenvolvimento e
 Implementação de Sistemas** (Engenharia de Software – UNIFSA), sob orientação do prof. Anderson Soares.
 
 ## Sobre o projeto
