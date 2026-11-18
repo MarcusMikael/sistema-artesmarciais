@@ -506,7 +506,7 @@ body.is-busy { cursor: progress; }
 
 /* ---------- Login ---------- */
 
-/* Formulário à esquerda; no computador, um bloco vermelho chapado à direita com o resumo. */
+/* Formulário à esquerda; no computador, um bloco grafite com fio vermelho à direita, com o resumo. */
 .login-page { display: grid; grid-template-columns: minmax(0, 1fr); min-height: 100svh; background: var(--bg); }
 
 .login-panel { display: flex; padding: 48px 24px; }
@@ -523,11 +523,11 @@ body.is-busy { cursor: progress; }
 
 @media (min-width: 960px) {
   .login-page { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-  .login-showcase { display: flex; align-items: flex-end; padding: 64px; background: var(--red); color: #fff; }
+  .login-showcase { display: flex; align-items: flex-end; padding: 64px; background: #1d1d1d; border-left: 3px solid var(--red); color: #d0d0d0; }
   .showcase-content { max-width: 440px; }
-  .login-showcase h2 { font: 700 40px/1.1 var(--font-display); letter-spacing: .3px; }
-  .showcase-list { margin-top: 32px; border-top: 1px solid #ffffff4d; }
-  .showcase-list li { padding: 14px 0; border-bottom: 1px solid #ffffff4d; font-size: 16px; line-height: 1.45; }
+  .login-showcase h2 { font: 700 40px/1.1 var(--font-display); letter-spacing: .3px; color: #fff; }
+  .showcase-list { margin-top: 32px; border-top: 1px solid #ffffff1f; }
+  .showcase-list li { padding: 14px 0; border-bottom: 1px solid #ffffff1f; font-size: 16px; line-height: 1.45; }
 }
 
 /* ---------- Telas médias ---------- */
