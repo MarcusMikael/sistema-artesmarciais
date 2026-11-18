@@ -11,55 +11,55 @@
 <body>
   <div id="app">
     <main class="login-page">
+      <section class="login-card">
+        <img class="login-logo" src="/img/logo.webp" alt="Escola de Artes Marciais Alessandro Silva">
 
-      <section class="login-panel">
-        <div class="login-content">
-          <img class="login-logo" src="/img/logo.webp" alt="Escola de Artes Marciais Alessandro Silva">
+        <div class="login-heading">
+          <h1>Entrar</h1>
+          <p>Painel da Escola de Artes Marciais Alessandro Silva.</p>
+        </div>
 
-          <div class="login-heading">
-            <h1>Entrar</h1>
-            <p>Painel da Escola de Artes Marciais Alessandro Silva.</p>
+        <form class="login-form" id="login-form" novalidate>
+          <label class="field" id="field-email">
+            <span class="field-label">E-mail</span>
+            <span class="input-wrap">
+              <span data-icon="mail"></span>
+              <input type="email" name="email" inputmode="email" autocomplete="username" placeholder="seu@email.com">
+            </span>
+            <span class="error-text" hidden></span>
+          </label>
+
+          <div class="field" id="field-senha">
+            <div class="label-row">
+              <label class="field-label" for="senha">Senha</label>
+              <button class="link-button" type="button" id="esqueci-senha" aria-expanded="false" aria-controls="senha-ajuda">Esqueceu a senha?</button>
+            </div>
+            <span class="input-wrap">
+              <span data-icon="lock"></span>
+              <input type="password" id="senha" name="senha" autocomplete="current-password" placeholder="Digite sua senha">
+              <button class="icon-button" type="button" id="toggle-senha" aria-label="Mostrar senha"></button>
+            </span>
+            <span class="error-text" hidden></span>
+            <p class="login-help" id="senha-ajuda" hidden>
+              A senha do painel é definida pelo responsável técnico do sistema. Peça a ele para redefinir.
+            </p>
           </div>
 
-          <form class="login-form" id="login-form" novalidate>
-            <label class="field" id="field-email">
-              <span class="field-label">E-mail</span>
-              <span class="input-wrap">
-                <span data-icon="mail"></span>
-                <input type="email" name="email" inputmode="email" autocomplete="username" placeholder="seu@email.com">
-              </span>
-              <span class="error-text" hidden></span>
-            </label>
+          <label class="check-row login-remember">
+            <input type="checkbox" name="lembrar" value="on">
+            <span><span data-icon="check"></span></span>
+            <b>Lembrar de mim</b>
+          </label>
 
-            <label class="field" id="field-senha">
-              <span class="field-label">Senha</span>
-              <span class="input-wrap">
-                <span data-icon="lock"></span>
-                <input type="password" name="senha" autocomplete="current-password" placeholder="Digite sua senha">
-                <button class="icon-button" type="button" id="toggle-senha" aria-label="Mostrar senha"></button>
-              </span>
-              <span class="error-text" hidden></span>
-            </label>
+          <div class="auth-error" id="auth-error" hidden></div>
 
-            <div class="auth-error" id="auth-error" hidden></div>
-
-            <button class="button primary login-button" type="submit" id="login-button">
-              Entrar no painel <span data-icon="arrow"></span>
-            </button>
-          </form>
-        </div>
+          <button class="button primary login-button" type="submit" id="login-button">
+            <span class="spinner" aria-hidden="true"></span>
+            <span class="login-button-text">Entrar no painel</span>
+            <span data-icon="arrow"></span>
+          </button>
+        </form>
       </section>
-
-      <aside class="login-showcase" aria-labelledby="showcase-title">
-        <div class="showcase-content">
-          <h2 id="showcase-title">Alunos, mensalidades e graduações.</h2>
-          <ul class="showcase-list">
-            <li>Cadastro dos alunos por modalidade, turma e faixa</li>
-            <li>Conferência e confirmação dos comprovantes</li>
-            <li>Contato e cobrança pelo WhatsApp</li>
-          </ul>
-        </div>
-      </aside>
     </main>
   </div>
 

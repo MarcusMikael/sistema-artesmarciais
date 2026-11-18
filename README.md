@@ -40,6 +40,14 @@ Os dados somem ao reiniciar.
 O sistema não sobe sem `ADMIN_PASSWORD`. Depois de 5 senhas erradas, o login fica
 bloqueado por 15 minutos para aquele IP (20 erradas bloqueiam a conta pelo mesmo tempo).
 
+**Lembrar de mim:** mantém o login por 30 dias no mesmo navegador. O token fica no banco
+(tabela `login_lembrado`), então continua valendo depois que o Render reinicia o serviço.
+Sair do painel apaga o token.
+
+**Esqueceu a senha?** A senha é a variável `ADMIN_PASSWORD` no Render: para redefinir,
+troque o valor lá e refaça o deploy. A tela de login orienta o usuário a procurar o
+responsável técnico.
+
 No perfil H2 (`spring-boot:test-run`) a senha de desenvolvimento fica em
 `src/test/resources/application-h2.properties`.
 

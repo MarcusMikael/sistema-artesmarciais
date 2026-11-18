@@ -34,6 +34,7 @@ import java.util.Set;
 public class SecurityConfig {
 
     private static final String LOGIN_URL = "/api/auth/login";
+    private static final int DIAS_LEMBRAR = 30;
 
     /** Senhas que já foram publicadas no repositório (README / arquivo de exemplo). */
     private static final Set<String> SENHAS_PUBLICADAS = Set.of("alessandro123");
@@ -57,7 +58,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
-                                                   LoginAttemptService tentativas) throws Exception {
+                                                   LoginAttemptService tentativas,
+                                                   TokenLembrarRepository tokensLembrar,
+                                                   UserDetailsService usuarios,
+                                                   @Value("${app.lembrar.chave:${app.admin.email}}") String chaveLembrar)
+            throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
@@ -84,8 +89,29 @@ public class SecurityConfig {
                 })
                 .permitAll()
             )
+            // "Lembrar de mim": token guardado no banco, válido por 30 dias e trocado a cada
+            // uso. Sobrevive aos reinícios do Render; o logout apaga o token.
+            .rememberMe(rm -> rm
+                .tokenRepository(tokensLembrar)
+                .userDetailsService(usuarios)
+                .key(chaveLembrar)
+                .rememberMeParameter("lembrar")
+                .rememberMeCookieName("lembrar_me")
+                .tokenValiditySeconds(DIAS_LEMBRAR * 24 * 60 * 60)
+            )
             .logout(logout -> logout
                 .logoutUrl("/api/auth/logout")
+                // Apaga o token do "Lembrar de mim" mesmo quando o logout chega sem sessão.
+                .addLogoutHandler((request, response, authentication) -> {
+                    if (request.getCookies() == null) {
+                        return;
+                    }
+                    for (jakarta.servlet.http.Cookie c : request.getCookies()) {
+                        if ("lembrar_me".equals(c.getName())) {
+                            tokensLembrar.removerPeloCookie(c.getValue());
+                        }
+                    }
+                })
                 .logoutSuccessHandler((request, response, authentication) ->
                     response.setStatus(HttpStatus.NO_CONTENT.value()))
             )

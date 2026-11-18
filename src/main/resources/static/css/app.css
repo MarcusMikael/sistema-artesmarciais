@@ -506,28 +506,36 @@ body.is-busy { cursor: progress; }
 
 /* ---------- Login ---------- */
 
-/* Formulário à esquerda; no computador, um bloco grafite com fio vermelho à direita, com o resumo. */
-.login-page { display: grid; grid-template-columns: minmax(0, 1fr); min-height: 100svh; background: var(--bg); }
-
-.login-panel { display: flex; padding: 48px 24px; }
-.login-content { width: 100%; max-width: 380px; margin: auto; }
-.login-logo { width: 96px; height: 96px; margin-bottom: 36px; border-radius: 50%; }
-.login-heading { margin-bottom: 28px; }
-.login-heading h1 { font: 700 34px/1.1 var(--font-display); letter-spacing: .3px; }
+/* Um card centralizado com logo e formulário. */
+.login-page { display: flex; align-items: center; justify-content: center; min-height: 100svh; padding: 24px 16px; background: var(--bg); }
+.login-card { width: 100%; max-width: 420px; padding: 32px; background: var(--layer); border: 1px solid #262626; border-radius: 12px; }
+.login-logo { width: 88px; height: 88px; margin-bottom: 28px; border-radius: 50%; }
+.login-heading { margin-bottom: 26px; }
+.login-heading h1 { font: 700 32px/1.1 var(--font-display); letter-spacing: .3px; }
 .login-heading p { margin-top: 8px; color: var(--muted); font-size: 15px; }
 .login-form { display: flex; flex-direction: column; gap: 18px; }
 .login-form .input-wrap { min-height: 52px; }
-.login-button { width: 100%; min-height: 52px; margin-top: 6px; font-size: 15px; }
 
-.login-showcase { display: none; }
+/* Rótulo da senha com "Esqueceu a senha?" à direita */
+.label-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.link-button { min-height: 32px; margin: -8px -6px; padding: 0 6px; border-radius: 4px; color: var(--red-light); font-size: 13px; font-weight: 600; }
+.link-button:hover { text-decoration: underline; }
+.login-help { padding: 10px 12px; border-radius: var(--radius-sm); background: var(--raised); color: #d6d6d6; font-size: 13px; line-height: 1.5; }
 
-@media (min-width: 960px) {
-  .login-page { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-  .login-showcase { display: flex; align-items: flex-end; padding: 64px; background: #1d1d1d; border-left: 3px solid var(--red); color: #d0d0d0; }
-  .showcase-content { max-width: 440px; }
-  .login-showcase h2 { font: 700 40px/1.1 var(--font-display); letter-spacing: .3px; color: #fff; }
-  .showcase-list { margin-top: 32px; border-top: 1px solid #ffffff1f; }
-  .showcase-list li { padding: 14px 0; border-bottom: 1px solid #ffffff1f; font-size: 16px; line-height: 1.45; }
+.login-remember { margin: -2px 0 0; }
+.login-remember b { font-size: 14px; font-weight: 500; color: #d6d6d6; }
+
+/* Botão com estado de carregamento: impede cliques repetidos */
+.login-button { width: 100%; min-height: 52px; margin-top: 2px; font-size: 15px; }
+.login-button .spinner { display: none; border-color: #ffffff59; border-top-color: #fff; border-right-color: #fff; }
+.login-button.is-loading { cursor: progress; }
+.login-button.is-loading:disabled { opacity: 1; cursor: progress; }
+.login-button.is-loading .spinner { display: inline-block; }
+.login-button.is-loading .icon { display: none; }
+
+@media (max-width: 419px) {
+  .login-page { align-items: flex-start; padding: 0; }
+  .login-card { max-width: none; min-height: 100svh; padding: 40px 20px 24px; border: 0; border-radius: 0; background: var(--bg); }
 }
 
 /* ---------- Telas médias ---------- */
