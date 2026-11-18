@@ -21,15 +21,17 @@ manual e não há cobrança automática.
 
 Funciona no celular e no computador.
 
-| Início | Financeiro |
-|---|---|
-| ![Início com indicadores do mês](docs/imagens/inicio.jpg) | ![Financeiro com as mensalidades do mês](docs/imagens/financeiro.jpg) |
-
 No celular:
 
 | Início | Alunos | Financeiro | Ficha do aluno |
 |---|---|---|---|
 | ![Início no celular](docs/imagens/celular-inicio.jpg) | ![Lista de alunos no celular](docs/imagens/celular-alunos.jpg) | ![Financeiro no celular](docs/imagens/celular-financeiro.jpg) | ![Ficha do aluno no celular](docs/imagens/celular-ficha.jpg) |
+
+No computador:
+
+| Início | Financeiro |
+|---|---|
+| ![Início com indicadores do mês](docs/imagens/inicio.jpg) | ![Financeiro com as mensalidades do mês](docs/imagens/financeiro.jpg) |
 
 ## Como executar
 
@@ -83,8 +85,16 @@ CSRF e cabeçalhos de segurança.
 
 ## Equipe
 
-6º período, turno manhã · Engenharia de Software – UNIFSA · 2026.2. Histórico e perfis no GitHub em
-[EQUIPES.md](EQUIPES.md).
+Equipe responsável por esta versão. Os perfis no GitHub e o histórico de todas as equipes que trabalharam no
+projeto ficam em [EQUIPES.md](EQUIPES.md).
+
+| Campo | Informação |
+|---|---|
+| **Período letivo** | 2026.2 |
+| **Turma** | 6º período, turno manhã |
+| **Disciplina** | ACE – Desenvolvimento e Implementação de Sistemas |
+| **Curso e instituição** | Engenharia de Software – UNIFSA, Teresina – PI |
+| **Orientação** | Prof. Anderson Soares |
 
 | Integrante | GitHub |
 |---|---|
