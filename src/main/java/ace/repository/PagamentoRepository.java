@@ -14,9 +14,6 @@ import java.util.List;
 @Repository
 public interface PagamentoRepository extends JpaRepository<PagamentoModel, Long> {
 
-    // Buscar pagamentos de um aluno
-    List<PagamentoModel> findByAluno_Id(Long idAluno);
-
     // Histórico do aluno, do mês mais recente para o mais antigo
     @EntityGraph(attributePaths = "aluno")
     List<PagamentoModel> findByAluno_IdOrderByAnoReferenciaDescMesReferenciaDesc(Long idAluno);
@@ -42,13 +39,6 @@ public interface PagamentoRepository extends JpaRepository<PagamentoModel, Long>
     // Buscar pagamentos por status
     @EntityGraph(attributePaths = "aluno")
     List<PagamentoModel> findByStatusPagamento(StatusPagamento status);
-
-    // Buscar pagamentos de um mês e ano por status
-    List<PagamentoModel> findByMesReferenciaAndAnoReferenciaAndStatusPagamento(
-            Integer mes,
-            Integer ano,
-            StatusPagamento status
-    );
 
     // Verificar se já existe pagamento para o aluno naquele mês
     boolean existsByAluno_IdAndMesReferenciaAndAnoReferencia(

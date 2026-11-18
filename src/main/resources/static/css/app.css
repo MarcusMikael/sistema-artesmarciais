@@ -408,7 +408,6 @@ body.is-busy { cursor: progress; }
 .timeline { display: flex; flex-direction: column; margin-bottom: 4px; }
 .timeline li { position: relative; display: grid; grid-template-columns: 14px 1fr auto; align-items: center; gap: 12px; padding: 8px 0; }
 .timeline li:not(:last-child)::after { content: ""; position: absolute; left: 6px; top: 32px; bottom: -10px; width: 2px; background: var(--border); }
-.timeline-dot { width: 14px; height: 14px; border-radius: 50%; box-shadow: 0 0 0 1px #ffffff40; }
 .timeline strong { display: block; font-weight: 600; }
 .timeline small { color: var(--muted); font-size: 13px; }
 .grad-form { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }

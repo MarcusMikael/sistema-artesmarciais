@@ -3,7 +3,6 @@ package ace.model;
 import ace.model.enums.Modalidade;
 import ace.model.enums.StatusAluno;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -13,7 +12,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "aluno")
 public class AlunoModel {
 

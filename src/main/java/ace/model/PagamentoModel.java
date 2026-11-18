@@ -2,7 +2,6 @@ package ace.model;
 
 import ace.model.enums.StatusPagamento;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -24,7 +23,6 @@ public class PagamentoModel {
 
     // Relacionamento com Aluno
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "id_aluno", nullable = false)
     private AlunoModel aluno;
 

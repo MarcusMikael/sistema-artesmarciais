@@ -16,9 +16,4 @@ public interface AlunoRepository extends JpaRepository<AlunoModel, Long> {
 
     // Buscar alunos pelo status
     List<AlunoModel> findByStatus(StatusAluno status);
-
-    // Buscar alunos pelo nome e status
-    List<AlunoModel> findByNomeContainingIgnoreCaseAndStatus(
-            String nome, StatusAluno status
-    );
 }
