@@ -19,7 +19,7 @@ function waitingList(lista) {
   }
   return `<ul class="row-list">${lista.slice(0, 6).map((p) => `
     <li class="row-item">
-      ${avatar(p.aluno.nome, 'sm')}
+      ${avatar(p.aluno.nome, 'sm', p.aluno.faixaAtual)}
       <div class="row-main">
         <a href="#/alunos/${p.aluno.id}">${esc(p.aluno.nome)}</a>
         <span>${esc(modalidade(p.aluno.modalidade))} · ${money(p.valor)}</span>
@@ -34,7 +34,7 @@ function lateList(lista) {
   }
   return `<ul class="row-list">${lista.slice(0, 6).map((p) => `
     <li class="row-item">
-      ${avatar(p.aluno.nome, 'sm')}
+      ${avatar(p.aluno.nome, 'sm', p.aluno.faixaAtual)}
       <div class="row-main">
         <a href="#/alunos/${p.aluno.id}">${esc(p.aluno.nome)}</a>
         <span class="text-late">Venceu ${esc(formatDayMonth(p.dataVencimento))} · ${p.diasAtraso} ${p.diasAtraso === 1 ? 'dia' : 'dias'} · ${money(p.valor)}</span>

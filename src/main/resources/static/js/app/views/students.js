@@ -1,6 +1,6 @@
 /* Lista de alunos: tabela no computador, lista compacta no celular. */
 import { esc, icon, money } from '../../common.js';
-import { MODALIDADES, corFaixa, modalidade, norm } from '../format.js';
+import { MODALIDADES, beltStyle, modalidade, norm } from '../format.js';
 import { ativos, state } from '../state.js';
 import { avatar, emptyState, pageHeader, statusChip, whatsappButton } from '../ui.js';
 
@@ -23,8 +23,8 @@ export function filteredStudents() {
 
 export function faixaBadge(faixa) {
   if (!faixa) return '<span class="muted">—</span>';
-  const cor = corFaixa(faixa);
-  return `<span class="belt">${cor ? `<i style="background:${cor}"></i>` : ''}${esc(faixa)}</span>`;
+  const belt = beltStyle(faixa);
+  return `<span class="belt">${belt ? `<i style="${belt}"></i>` : ''}${esc(faixa)}</span>`;
 }
 
 function studentRows(list) {
@@ -36,7 +36,7 @@ function studentRows(list) {
       </tr></thead>
       <tbody>
         ${list.map((a) => `<tr>
-          <td><a class="cell-person" href="#/alunos/${a.id}">${avatar(a.nome, 'sm')}<span><strong>${esc(a.nome)}</strong><small>${esc(a.telefone || 'Sem telefone')}</small></span></a></td>
+          <td><a class="cell-person" href="#/alunos/${a.id}">${avatar(a.nome, 'sm', a.faixaAtual)}<span><strong>${esc(a.nome)}</strong><small>${esc(a.telefone || 'Sem telefone')}</small></span></a></td>
           <td>${esc(modalidade(a.modalidade))}</td>
           <td>${esc(a.turmaHorario || '—')}</td>
           <td>${faixaBadge(a.faixaAtual)}</td>
@@ -54,7 +54,7 @@ function studentRows(list) {
   <ul class="list-card mobile-only">
     ${list.map((a) => `<li>
       <a class="list-row" href="#/alunos/${a.id}">
-        ${avatar(a.nome)}
+        ${avatar(a.nome, '', a.faixaAtual)}
         <span class="list-main">
           <strong>${esc(a.nome)}</strong>
           <small>${esc(modalidade(a.modalidade))}${a.faixaAtual ? ` · ${esc(a.faixaAtual)}` : ''}</small>

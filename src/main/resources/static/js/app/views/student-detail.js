@@ -1,6 +1,6 @@
 /* Ficha do aluno: dados, contato, histórico de mensalidades e graduações. */
 import { esc, icon, money } from '../../common.js';
-import { FAIXAS, capital, corFaixa, formatDate, mesNome, modalidade, tempoDesde, todayIso } from '../format.js';
+import { FAIXAS, beltStyle, capital, formatDate, mesNome, modalidade, tempoDesde, todayIso } from '../format.js';
 import { findAluno, situacao, state } from '../state.js';
 import { avatar, emptyState, loadingState, paymentActions, paymentChip, statusChip, vencimentoText, whatsappButton } from '../ui.js';
 import { faixaBadge } from './students.js';
@@ -28,7 +28,7 @@ function historico(pagamentos) {
 function graduacoes(lista) {
   return `${lista.length ? `<ol class="timeline">${lista.map((g) => `
       <li>
-        <i class="timeline-dot" style="background:${corFaixa(g.faixa) || 'var(--muted)'}"></i>
+        <i class="timeline-belt" style="${beltStyle(g.faixa) || '--belt:var(--muted)'}"></i>
         <div>
           <strong>${esc(g.faixa)}</strong>
           <small>${esc(formatDate(g.data))}${g.observacao ? ` · ${esc(g.observacao)}` : ''}</small>
@@ -77,7 +77,7 @@ export function studentDetailPage(id) {
     <a class="back-link" href="#/alunos">${icon('back', 18)} Alunos</a>
 
     <section class="profile">
-      ${avatar(a.nome, 'lg')}
+      ${avatar(a.nome, 'lg', a.faixaAtual)}
       <div class="profile-main">
         <div class="profile-title"><h1>${esc(a.nome)}</h1>${statusChip(a.status)}</div>
         <p>${esc(modalidade(a.modalidade))}${a.turmaHorario ? ` · ${esc(a.turmaHorario)}` : ''}</p>

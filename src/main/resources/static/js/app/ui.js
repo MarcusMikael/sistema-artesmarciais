@@ -1,6 +1,6 @@
 /* Componentes de interface compartilhados entre as telas. */
 import { brandHtml, esc, icon, money } from '../common.js';
-import { capital, formatDate, formatDateTime, initials, mensagemCobranca, mesNome, whatsappLink } from './format.js';
+import { beltStyle, capital, formatDate, formatDateTime, initials, mensagemCobranca, mesNome, whatsappLink } from './format.js';
 import { situacao, state } from './state.js';
 
 const NAV = [
@@ -69,8 +69,9 @@ export function monthPicker() {
   </div>`;
 }
 
-export function avatar(nome, size = '') {
-  return `<span class="initials ${size}" aria-hidden="true">${esc(initials(nome))}</span>`;
+export function avatar(nome, size = '', faixa = null) {
+  const belt = beltStyle(faixa);
+  return `<span class="initials ${size}" aria-hidden="true"${belt ? ` style="${belt}"` : ''}>${esc(initials(nome))}</span>`;
 }
 
 export function statusChip(status) {

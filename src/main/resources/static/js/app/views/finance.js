@@ -29,7 +29,7 @@ function paymentRows(list) {
       <thead><tr><th>Aluno</th><th>Vencimento</th><th class="num">Valor</th><th>Situação</th><th><span class="sr-only">Ações</span></th></tr></thead>
       <tbody>
         ${list.map((p) => `<tr class="state-${situacao(p)}">
-          <td><a class="cell-person" href="#/alunos/${p.aluno.id}">${avatar(p.aluno.nome, 'sm')}<span><strong>${esc(p.aluno.nome)}</strong><small>${esc(modalidade(p.aluno.modalidade))}${p.aluno.status === 'INATIVO' ? ' · Inativo' : ''}</small></span></a></td>
+          <td><a class="cell-person" href="#/alunos/${p.aluno.id}">${avatar(p.aluno.nome, 'sm', p.aluno.faixaAtual)}<span><strong>${esc(p.aluno.nome)}</strong><small>${esc(modalidade(p.aluno.modalidade))}${p.aluno.status === 'INATIVO' ? ' · Inativo' : ''}</small></span></a></td>
           <td>${situacao(p) === 'paid' ? `<small class="muted">${vencimentoText(p)}</small>` : esc(formatDate(p.dataVencimento))}</td>
           <td class="num"><strong>${money(p.valor)}</strong></td>
           <td>${paymentChip(p, { short: true })}</td>
@@ -41,7 +41,7 @@ function paymentRows(list) {
   <div class="card-list mobile-only">
     ${list.map((p) => `<article class="payment-card state-${situacao(p)}">
       <div class="payment-top">
-        ${avatar(p.aluno.nome)}
+        ${avatar(p.aluno.nome, '', p.aluno.faixaAtual)}
         <a class="payment-name" href="#/alunos/${p.aluno.id}"><strong>${esc(p.aluno.nome)}</strong><small>${vencimentoText(p)}</small></a>
         <strong class="payment-value">${money(p.valor)}</strong>
       </div>

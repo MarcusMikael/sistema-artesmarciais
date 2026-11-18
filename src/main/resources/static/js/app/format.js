@@ -39,6 +39,14 @@ export function corFaixa(faixa) {
   return chave ? CORES_FAIXA[chave] : null;
 }
 
+/** Variáveis CSS para desenhar a faixa: cor e ponteira (vermelha na preta, preta nas demais). */
+export function beltStyle(faixa) {
+  const cor = corFaixa(faixa);
+  if (!cor) return '';
+  const tip = cor === CORES_FAIXA.preta ? 'var(--red)' : '#0a0a0a';
+  return `--belt:${cor};--belt-tip:${tip}`;
+}
+
 /* ---------- Datas ---------- */
 
 /** "2026-11-05" → Date local (sem problema de fuso). */

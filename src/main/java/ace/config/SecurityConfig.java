@@ -40,14 +40,14 @@ public class SecurityConfig {
     private static final int TAMANHO_MINIMO_SENHA = 10;
 
     /*
-     * Só scripts e dados do próprio sistema. Estilos inline são necessários para
-     * larguras/alturas calculadas (barras dos gráficos); as fontes vêm do Google Fonts.
+     * Só scripts, fontes e dados do próprio sistema. Estilos inline são necessários
+     * para larguras/alturas calculadas (barras dos gráficos) e cores das faixas.
      */
     private static final String CSP = String.join("; ",
             "default-src 'self'",
             "script-src 'self'",
-            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-            "font-src 'self' https://fonts.gstatic.com",
+            "style-src 'self' 'unsafe-inline'",
+            "font-src 'self'",
             "img-src 'self' data:",
             "connect-src 'self'",
             "object-src 'none'",
@@ -62,7 +62,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                     "/", "/index.html", "/login.html",
-                    "/css/**", "/js/**", "/img/**",
+                    "/css/**", "/js/**", "/img/**", "/fonts/**",
                     "/favicon.ico", "/error",
                     "/api/auth/csrf"
                 ).permitAll()
