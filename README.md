@@ -3,9 +3,10 @@
 **Acesse o sistema:** https://sistema-artesmarciais.onrender.com (acesso restrito ao administrador da escola; para
 explorar, rode localmente com os [dados de demonstração](#dados-de-demonstração))
 
-Criado em 2026 na disciplina **ACE – Desenvolvimento e Implementação de Sistemas** (Engenharia de Software –
+Criado em 2026.2 na disciplina **ACE – Desenvolvimento e Implementação de Sistemas** (Engenharia de Software –
 UNIFSA), sob orientação do prof. Anderson Soares, seguindo o **Documento de Requisitos** da equipe e os protótipos
-validados com a escola. A equipe está em [Equipe](#equipe).
+validados com a escola. A equipe atual está em [Equipe](#equipe), e o histórico de todas as equipes, em
+[EQUIPES.md](EQUIPES.md).
 
 ## Sumário
 
@@ -445,27 +446,32 @@ escola ou com o professor.**
 
 ## Equipe
 
+Equipe responsável por esta versão. Os perfis no GitHub e o histórico de todas as equipes que trabalharam no
+projeto ficam em [EQUIPES.md](EQUIPES.md).
+
 | Campo | Informação |
 |---|---|
-| **Período letivo** | 2026 |
-| **Turma** | 6º período |
+| **Período letivo** | 2026.2 |
+| **Turma** | 6º período, turno manhã |
 | **Disciplina** | ACE – Desenvolvimento e Implementação de Sistemas |
 | **Curso e instituição** | Engenharia de Software – UNIFSA, Teresina – PI |
 | **Orientação** | Prof. Anderson Soares |
 
-| Integrante |
-|---|
-| Antônio Neves Aguiar Neto |
-| Marcus Mikael Rodrigues Vieira |
-| Marcos André dos Santos Soares |
-| João Pedro Lima Barbosa |
+| Integrante | GitHub |
+|---|---|
+| Antônio Neves Aguiar Neto | [@Neeveszr](https://github.com/Neeveszr) |
+| Marcus Mikael Rodrigues Vieira | [@MarcusMikael](https://github.com/MarcusMikael) |
+| Marcos André dos Santos Soares | _a preencher_ |
+| João Pedro Lima Barbosa | _a preencher_ |
 
 ---
 
 ## Como continuar este projeto
 
 1. **Copie o repositório.** Prefira o botão *Fork* do GitHub, que mantém o vínculo com o original.
-2. **Registre a sua equipe** na seção [Equipe](#equipe), com período letivo, turma, disciplina e orientação.
+2. **Registre a sua equipe** no topo de [EQUIPES.md](EQUIPES.md) (há um modelo no fim do arquivo), sem remover
+   as anteriores, e acrescente os nomes no aviso de copyright do [LICENSE](LICENSE). Depois, atualize a seção
+   [Equipe](#equipe) acima.
 3. **Rode o projeto localmente** seguindo [Como executar](#como-executar) e confira os [testes](#testes).
 4. **Publique a sua versão**, se for o caso, com uma conta própria no Render e um banco PostgreSQL próprio
    ([Deploy](#deploy)): defina uma `ADMIN_PASSWORD` nova e atualize o link do sistema no topo deste README.
@@ -479,5 +485,9 @@ escola ou com o professor.**
 
 ## Licença
 
-O repositório ainda não define uma licença. Até que uma seja escolhida e o arquivo `LICENSE` seja adicionado, o
-código não pode ser reutilizado por terceiros sem autorização da equipe.
+Distribuído sob a [licença MIT](LICENSE): o código pode ser usado, modificado e redistribuído livremente, desde
+que o aviso de copyright e a licença sejam mantidos, o que preserva os créditos das equipes listadas em
+[EQUIPES.md](EQUIPES.md).
+
+A licença cobre o código. A logomarca (`src/main/resources/static/img/logo.webp`) e o nome "Escola de Artes
+Marciais Alessandro Silva" pertencem à escola e não estão incluídos nela.
