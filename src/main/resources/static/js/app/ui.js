@@ -78,11 +78,11 @@ export function statusChip(status) {
   return `<span class="chip ${ativo ? 'chip-active' : 'chip-muted'}">${ativo ? 'Ativo' : 'Inativo'}</span>`;
 }
 
-export function paymentChip(p) {
+export function paymentChip(p, { short = false } = {}) {
   const s = situacao(p);
   const map = {
     paid: ['chip-paid', 'check', 'Pago'],
-    waiting: ['chip-waiting', 'clock', 'Aguardando confirmação'],
+    waiting: ['chip-waiting', 'clock', short ? 'Aguardando' : 'Aguardando confirmação'],
     pending: ['chip-pending', 'calendar', 'Pendente'],
     late: ['chip-late', 'warning', `Atrasado · ${p.diasAtraso} ${p.diasAtraso === 1 ? 'dia' : 'dias'}`],
   };

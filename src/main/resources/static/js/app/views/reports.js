@@ -79,14 +79,14 @@ export function reportsPage() {
         <div class="panel-heading"><div><h2>Detalhe mensal</h2><p>Valores das mensalidades de cada mês</p></div></div>
         <div class="table-wrap">
           <table class="data-table">
-            <thead><tr><th>Mês</th><th class="num">Cobrado</th><th class="num">Recebido</th><th class="num">Em aberto</th><th class="num">%</th></tr></thead>
+            <thead><tr><th>Mês</th><th class="num col-opt">Cobrado</th><th class="num">Recebido</th><th class="num">Em aberto</th><th class="num col-opt">%</th></tr></thead>
             <tbody>
               ${meses.slice().reverse().map((m) => `<tr>
-                <td>${capital(mesNome(m.mes))} ${m.ano}</td>
-                <td class="num">${money(m.previsto)}</td>
+                <td class="nowrap">${mesCurto(m.mes)}/${String(m.ano).slice(2)}</td>
+                <td class="num col-opt">${money(m.previsto)}</td>
                 <td class="num">${money(m.recebido)}</td>
                 <td class="num">${money(Number(m.pendente) + Number(m.aguardando))}</td>
-                <td class="num">${Number(m.previsto) ? Math.round((m.recebido / m.previsto) * 100) : 0}%</td>
+                <td class="num col-opt">${Number(m.previsto) ? Math.round((m.recebido / m.previsto) * 100) : 0}%</td>
               </tr>`).join('')}
             </tbody>
           </table>

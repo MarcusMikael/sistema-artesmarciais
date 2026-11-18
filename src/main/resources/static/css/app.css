@@ -109,7 +109,7 @@ body.is-busy { cursor: progress; }
 .page-header h1 { font: 600 30px/1.1 var(--font-display); letter-spacing: .2px; }
 .page-header p { margin-top: 6px; color: var(--muted); font-size: 14px; }
 .page-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-.back-link { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; color: var(--muted); font-size: 14px; font-weight: 500; }
+.back-link { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; min-height: 44px; margin: -10px 0 -8px; color: var(--muted); font-size: 14px; font-weight: 500; }
 .back-link:hover { color: var(--text); }
 
 /* ---------- Botões ---------- */
@@ -138,7 +138,7 @@ body.is-busy { cursor: progress; }
   width: 36px; height: 36px; border-radius: var(--radius-sm); color: var(--muted);
 }
 .icon-button:hover { background: #ffffff0f; color: var(--text); }
-.text-button { color: var(--red-light); font-size: 13px; font-weight: 600; white-space: nowrap; }
+.text-button { display: inline-flex; align-items: center; min-height: 44px; margin: -12px -8px; padding: 0 8px; color: var(--red-light); font-size: 13px; font-weight: 600; white-space: nowrap; }
 .text-button:hover { text-decoration: underline; }
 .text-link {
   display: flex; align-items: center; gap: 8px; margin-top: 18px; padding-top: 16px;
@@ -188,11 +188,14 @@ body.is-busy { cursor: progress; }
 .dash-grid { display: grid; gap: 16px; }
 
 .row-list { border-top: 1px solid var(--border); }
-.row-item { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; padding: 12px 18px; }
+.row-item { position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; padding: 12px 18px; }
 .row-item + .row-item { border-top: 1px solid var(--border); }
 .row-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .row-main a { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .row-main a:hover { text-decoration: underline; }
+.row-main a::after { content: ""; position: absolute; inset: 0; }
+.row-item > .button { position: relative; z-index: 1; }
+.row-item:hover { background: var(--card-hover); }
 .row-main span { color: var(--muted); font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .empty-inline { display: flex; align-items: center; gap: 10px; padding: 20px 18px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
 .empty-inline .icon { color: var(--green); }
@@ -269,7 +272,7 @@ body.is-busy { cursor: progress; }
 .segmented b { margin-left: 4px; padding: 1px 6px; border-radius: 3px; background: #ffffff12; color: var(--muted); font-size: 12px; font-weight: 600; }
 .segmented.scroll { grid-auto-columns: max-content; overflow-x: auto; scrollbar-width: none; }
 .segmented.scroll::-webkit-scrollbar { display: none; }
-.segmented.compact button { min-height: 34px; font-size: 13px; }
+.segmented.compact button { min-height: 40px; font-size: 14px; }
 
 /* ---------- Chips e faixas ---------- */
 
@@ -307,15 +310,15 @@ body.is-busy { cursor: progress; }
 .list-side strong { font-size: 14px; white-space: nowrap; }
 .result-count { margin-top: 10px; color: var(--subtle); font-size: 13px; }
 
-.table-wrap { overflow-x: auto; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); }
+.table-wrap { position: relative; overflow-x: auto; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); }
 .panel .table-wrap { border: 0; border-radius: 0; border-top: 1px solid var(--border); }
 .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
 .data-table th {
-  padding: 12px 16px; text-align: left; white-space: nowrap;
+  padding: 12px 14px; text-align: left; white-space: nowrap;
   color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: .4px; text-transform: uppercase;
   border-bottom: 1px solid var(--border); background: var(--layer);
 }
-.data-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.data-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
 .data-table tbody tr:last-child td { border-bottom: 0; }
 .data-table tbody tr:hover { background: var(--card-hover); }
 .data-table .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
@@ -520,7 +523,7 @@ body.is-busy { cursor: progress; }
 
 /* ---------- Computador: menu lateral e tabelas ---------- */
 
-@media (min-width: 960px) {
+@media (min-width: 1280px) {
   .app-shell { padding-bottom: 0; padding-left: var(--sidebar); }
   .app-header, .bottom-nav { display: none; }
   .sidebar {
@@ -560,13 +563,27 @@ body.is-busy { cursor: progress; }
   .toast { bottom: 24px; left: calc(50% + var(--sidebar) / 2); }
 }
 
-@media (max-width: 959px) {
+@media (max-width: 1279px) {
   .hide-mobile { display: none; }
+}
+
+/* Em telas de computador menores, os botões secundários da tabela ficam só com o ícone. */
+@media (max-width: 1439px) {
   .cell-actions .hide-compact { display: none; }
 }
 
-@media (min-width: 960px) and (max-width: 1180px) {
-  .cell-actions .hide-compact { display: none; }
+/* Celular e tablet: campos com 16px para o iPhone não dar zoom ao tocar. */
+@media (max-width: 1279px) {
+  .input-wrap input, .select-wrap select, .select-wrap.compact select { font-size: 16px; }
+}
+
+/* Tabela de valores no celular: mais compacta para caber sem rolar. */
+@media (max-width: 599px) {
+  .data-table { font-size: 13px; }
+  .data-table th, .data-table td { padding: 10px 8px; }
+  .data-table th:first-child, .data-table td:first-child { padding-left: 14px; }
+  .data-table th { font-size: 11px; letter-spacing: .2px; }
+  .data-table .col-opt { display: none; }
 }
 
 @media (max-width: 380px) {

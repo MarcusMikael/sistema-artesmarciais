@@ -46,7 +46,7 @@ No perfil H2 (`spring-boot:test-run`) a senha de desenvolvimento fica em
 ## Telas
 
 O painel funciona no celular (barra de navegação inferior, listas compactas) e no
-computador (menu lateral, tabelas). A partir de 960px de largura entra o layout de computador.
+computador (menu lateral, tabelas). A partir de 1280px de largura entra o layout de computador; abaixo disso (inclusive tablets) ficam o menu inferior e os cartões.
 
 - `/login.html` — login (Spring Security, sessão + CSRF)
 - `/#/` — início: indicadores do mês, comprovantes para conferir, mensalidades em atraso e receita recente

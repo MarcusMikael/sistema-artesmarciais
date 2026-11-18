@@ -32,7 +32,7 @@ function paymentRows(list) {
           <td><a class="cell-person" href="#/alunos/${p.aluno.id}">${avatar(p.aluno.nome, 'sm')}<span><strong>${esc(p.aluno.nome)}</strong><small>${esc(modalidade(p.aluno.modalidade))}${p.aluno.status === 'INATIVO' ? ' · Inativo' : ''}</small></span></a></td>
           <td>${situacao(p) === 'paid' ? `<small class="muted">${vencimentoText(p)}</small>` : esc(formatDate(p.dataVencimento))}</td>
           <td class="num"><strong>${money(p.valor)}</strong></td>
-          <td>${paymentChip(p)}</td>
+          <td>${paymentChip(p, { short: true })}</td>
           <td class="cell-actions">${paymentActions(p, { compact: true })}</td>
         </tr>`).join('')}
       </tbody>
