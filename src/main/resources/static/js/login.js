@@ -57,7 +57,8 @@ import { api, esc, icon } from './common.js';
       location.replace('/');
     } catch (err) {
       showAuthError(err.status === 401 ? 'E-mail ou senha incorretos.'
-        : 'Não foi possível entrar. Tente novamente.');
+        : err.status === 429 ? err.message
+          : 'Não foi possível entrar. Tente novamente.');
       button.disabled = false;
     }
   });

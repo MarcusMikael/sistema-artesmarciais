@@ -5,6 +5,7 @@ import ace.model.enums.Modalidade;
 import ace.model.enums.StatusAluno;
 
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -38,6 +39,7 @@ public record AlunoRequest(
 
         @NotNull(message = "Informe uma mensalidade válida.")
         @DecimalMin(value = "0.01", message = "Informe uma mensalidade válida.")
+        @Digits(integer = 8, fraction = 2, message = "Informe uma mensalidade válida.")
         BigDecimal valorMensalidade,
 
         /* se vier nulo, o aluno é criado como ATIVO / mantém o status atual. */

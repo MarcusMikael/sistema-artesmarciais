@@ -1,20 +1,26 @@
-# Modelo de configuracao. Copie para application.properties (que fica fora do git) e ajuste.
+# Modelo de configuracao. Copie para application.properties e ajuste.
 spring.application.name=ace
 
 # ---------- Banco de dados (PostgreSQL) ----------
 # Pode ser sobrescrito pelas variaveis de ambiente DB_URL, DB_USER e DB_PASSWORD.
+# Em servidor remoto, use SSL: jdbc:postgresql://host:5432/banco?sslmode=require
 spring.datasource.url=${DB_URL:jdbc:postgresql://localhost:5432/ace}
 spring.datasource.username=${DB_USER:postgres}
-spring.datasource.password=${DB_PASSWORD:postgres}
+spring.datasource.password=${DB_PASSWORD}
 
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.open-in-view=true
 spring.jpa.properties.hibernate.format_sql=true
 
 # ---------- Acesso do administrador ----------
-# Troque estes valores (ou defina ADMIN_EMAIL / ADMIN_PASSWORD) antes de colocar em producao.
+# Sem senha padrao: defina ADMIN_PASSWORD (minimo de 10 caracteres).
 app.admin.email=${ADMIN_EMAIL:admin@alessandrosilva.com}
-app.admin.password=${ADMIN_PASSWORD:alessandro123}
+app.admin.password=${ADMIN_PASSWORD}
 app.admin.nome=${ADMIN_NOME:Administrador}
 
 server.servlet.session.timeout=8h
+server.forward-headers-strategy=native
+server.servlet.session.cookie.same-site=lax
+server.servlet.session.cookie.http-only=true
+server.error.include-stacktrace=never
+server.error.include-message=never

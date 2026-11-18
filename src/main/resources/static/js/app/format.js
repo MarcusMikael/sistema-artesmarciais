@@ -118,6 +118,8 @@ export function downloadCsv(filename, header, rows) {
   const cell = (v) => {
     let s = String(v ?? '');
     if (typeof v === 'number') s = Number.isInteger(v) ? String(v) : v.toFixed(2).replace('.', ',');
+    // Texto que começa com = + - @ viraria fórmula no Excel: prefixa com apóstrofo.
+    else if (/^[=+\-@\t\r]/.test(s)) s = `'${s}`;
     return /[;"\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
   };
   const csv = [header, ...rows].map((r) => r.map(cell).join(';')).join('\r\n');

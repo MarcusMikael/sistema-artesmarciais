@@ -46,6 +46,51 @@ class SegurancaApiTests {
     }
 
     @Test
+    void loginBloqueiaDepoisDeCincoSenhasErradas() throws Exception {
+        for (int i = 0; i < 5; i++) {
+            mvc.perform(post("/api/auth/login").with(csrf()).with(ip("203.0.113.7"))
+                    .param("email", "admin@alessandrosilva.com").param("senha", "errada" + i))
+                .andExpect(status().isUnauthorized());
+        }
+        // Mesmo com a senha certa, o IP fica bloqueado por um tempo.
+        mvc.perform(post("/api/auth/login").with(csrf()).with(ip("203.0.113.7"))
+                .param("email", "admin@alessandrosilva.com").param("senha", "alessandro123"))
+            .andExpect(status().isTooManyRequests())
+            .andExpect(header().exists("Retry-After"))
+            .andExpect(jsonPath("$.message").value(org.hamcrest.Matchers.containsString("Muitas tentativas")));
+    }
+
+    @Test
+    void respostasTrazemCabecalhosDeSeguranca() throws Exception {
+        mvc.perform(get("/login.html"))
+            .andExpect(header().string("Content-Security-Policy",
+                org.hamcrest.Matchers.containsString("script-src 'self'")))
+            .andExpect(header().string("X-Frame-Options", "DENY"))
+            .andExpect(header().string("Referrer-Policy", "same-origin"))
+            .andExpect(header().exists("Permissions-Policy"));
+    }
+
+    @Test
+    @WithMockUser
+    void mensalidadeComDigitosDemaisEhRecusada() throws Exception {
+        mvc.perform(post("/api/alunos").with(csrf())
+                .contentType("application/json")
+                .content("{\"nome\":\"Aluno Teste\",\"modalidade\":\"JIU_JITSU\",\"valorMensalidade\":99999999999}"))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.fields.valorMensalidade").exists());
+        mvc.perform(get("/api/pagamentos/mes").param("mes", "1"))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.message").value("Parâmetro obrigatório ausente: ano."));
+    }
+
+    private static org.springframework.test.web.servlet.request.RequestPostProcessor ip(String endereco) {
+        return request -> {
+            request.setRemoteAddr(endereco);
+            return request;
+        };
+    }
+
+    @Test
     @WithMockUser
     void escritaSemTokenCsrfEhBloqueada() throws Exception {
         mvc.perform(post("/api/alunos").contentType("application/json").content("{}"))

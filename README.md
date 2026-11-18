@@ -4,13 +4,13 @@ Painel administrativo (alunos e mensalidades) em Spring Boot 4 + HTML/CSS/JS, ba
 
 ## Executar com PostgreSQL
 
-0. O `application.properties` está no `.gitignore`. Num clone novo, copie
-   `src/main/resources/application.properties.example` para `application.properties`.
+0. O `application.properties` versionado lê tudo de variáveis de ambiente. Para usar
+   valores locais, veja o modelo `src/main/resources/application.properties.example`.
 1. Crie o banco: `CREATE DATABASE ace;`
 2. Defina as credenciais (ou edite `src/main/resources/application.properties`):
 
 ```powershell
-$env:DB_USER="postgres"; $env:DB_PASSWORD="sua-senha"
+$env:DB_USER="postgres"; $env:DB_PASSWORD="sua-senha"; $env:ADMIN_PASSWORD="uma-senha-forte"
 ```
 
 3. Suba a aplicação e acesse http://localhost:8080:
@@ -34,11 +34,14 @@ Os dados somem ao reiniciar.
 | Variável         | Padrão                     |
 |------------------|----------------------------|
 | `ADMIN_EMAIL`    | admin@alessandrosilva.com  |
-| `ADMIN_PASSWORD` | alessandro123              |
-
-**Troque a senha padrão antes de colocar em produção.**
-
+| `ADMIN_PASSWORD` | **obrigatória**, mínimo de 10 caracteres (sem padrão) |
 | `APP_TIMEZONE`   | America/Sao_Paulo (via `app.timezone`) |
+
+O sistema não sobe sem `ADMIN_PASSWORD`. Depois de 5 senhas erradas, o login fica
+bloqueado por 15 minutos para aquele IP (20 erradas bloqueiam a conta pelo mesmo tempo).
+
+No perfil H2 (`spring-boot:test-run`) a senha de desenvolvimento fica em
+`src/test/resources/application-h2.properties`.
 
 ## Telas
 
