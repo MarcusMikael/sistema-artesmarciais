@@ -68,7 +68,14 @@ O `Dockerfile` gera a imagem publicada no Render. Variáveis de ambiente obrigat
 
 Opcionais: `ADMIN_EMAIL` (padrão `admin@alessandrosilva.com`), `ADMIN_NOME` e `APP_TIMEZONE` (padrão
 `America/Sao_Paulo`). Para redefinir a senha do painel, troque `ADMIN_PASSWORD` e refaça o deploy. No plano
-gratuito, o primeiro acesso depois de um tempo parado leva até 1 minuto.
+gratuito, o serviço dorme após uns 15 minutos sem uso e o primeiro acesso seguinte demora. Para amenizar:
+
+- **Inicialização mais rápida:** o `Dockerfile` extrai o jar e gera um arquivo de CDS (Class Data Sharing) no
+  build; em medição local, a partida ficou de 2 a 3 vezes mais rápida.
+- **Sem espera:** um serviço de ping gratuito (por exemplo, UptimeRobot) chamando
+  `https://sistema-artesmarciais.onrender.com/api/saude` a cada 10 minutos mantém o serviço acordado. Use a mesma
+  rota como *Health Check Path* no Render. O plano gratuito dá 750 horas por mês, então prefira ligar o ping perto
+  de apresentações.
 
 ## Regras principais
 

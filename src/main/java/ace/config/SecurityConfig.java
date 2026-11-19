@@ -69,7 +69,7 @@ public class SecurityConfig {
                     "/", "/index.html", "/login.html",
                     "/css/**", "/js/**", "/img/**", "/fonts/**",
                     "/favicon.ico", "/error",
-                    "/api/auth/csrf"
+                    "/api/auth/csrf", "/api/saude"
                 ).permitAll()
                 .anyRequest().authenticated()
             )

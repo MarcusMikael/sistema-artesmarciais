@@ -31,6 +31,9 @@ class SegurancaApiTests {
     void apiExigeLogin() throws Exception {
         mvc.perform(get("/api/alunos")).andExpect(status().isUnauthorized());
         mvc.perform(get("/login.html")).andExpect(status().isOk());
+        // Verificação de saúde para o serviço de ping: pública e sem dados.
+        mvc.perform(get("/api/saude")).andExpect(status().isOk())
+            .andExpect(jsonPath("$.status").value("ok"));
         // A tela de login usa as fontes hospedadas no sistema antes do login.
         mvc.perform(get("/fonts/inter-latin-wght-normal.woff2")).andExpect(status().isOk());
     }
